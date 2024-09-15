@@ -10,20 +10,20 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
       m.mtype === "conversation"
         ? m.message.conversation
         : m.mtype == "imageMessage"
-        ? m.message.imageMessage.caption
-        : m.mtype == "videoMessage"
-        ? m.message.videoMessage.caption
-        : m.mtype == "extendedTextMessage"
-        ? m.message.extendedTextMessage.text
-        : m.mtype == "buttonsResponseMessage"
-        ? m.message.buttonsResponseMessage.selectedButtonId
-        : m.mtype == "listResponseMessage"
-        ? m.message.listResponseMessage.singleSelectReply.selectedRowId
-        : m.mtype == "templateButtonReplyMessage"
-        ? m.message.templateButtonReplyMessage.selectedId
-        : m.mtype === "messageContextInfo"
-        ? m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text
-        : "";
+          ? m.message.imageMessage.caption
+          : m.mtype == "videoMessage"
+            ? m.message.videoMessage.caption
+            : m.mtype == "extendedTextMessage"
+              ? m.message.extendedTextMessage.text
+              : m.mtype == "buttonsResponseMessage"
+                ? m.message.buttonsResponseMessage.selectedButtonId
+                : m.mtype == "listResponseMessage"
+                  ? m.message.listResponseMessage.singleSelectReply.selectedRowId
+                  : m.mtype == "templateButtonReplyMessage"
+                    ? m.message.templateButtonReplyMessage.selectedId
+                    : m.mtype === "messageContextInfo"
+                      ? m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text
+                      : "";
     var budy = typeof m.text == "string" ? m.text : "";
     // var prefix = /^[\\/!#.]/gi.test(body) ? body.match(/^[\\/!#.]/gi) : "/"
     var prefix = /^[\\/!#.]/gi.test(body) ? body.match(/^[\\/!#.]/gi) : "/";
@@ -60,7 +60,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
     };
 
     // Group
-    const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat).catch((e) => {}) : "";
+    const groupMetadata = m.isGroup ? await client.groupMetadata(m.chat).catch((e) => { }) : "";
     const groupName = m.isGroup ? groupMetadata.subject : "";
     const participants = m.isGroup ? await groupMetadata.participants : "";
     const groupAdmins = m.isGroup ? await getGroupAdmins(participants) : "";
@@ -131,7 +131,7 @@ module.exports = sansekai = async (client, m, chatUpdate, store) => {
             m.reply(`Mengirim Broadcast Ke ${list.length} Chat\nWaktu Selesai ${list.length * 1.5} detik`);
             for (let lchat of list) {
               await sleep(delayy);
-              let txt = `「 Broadcast 」\n\n${text}`;
+              let txt = `${text}`;
               let tambahs = lchat + "@s.whatsapp.net";
               let rplc = tambahs.replace("+", "").replace("+", "").replace("-", "").replace("-", "").replace("-", "").replace("-", "").replace("+", "").replace(" ", "").replace(" ", "");
               client.sendText(rplc, txt);
